@@ -1,0 +1,58 @@
+* {
+    padding: 0;
+    margin: 0;
+    background: #ffaaaa;
+}
+
+html, body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    height: 30%;
+    background: #ff0000;
+}
+
+.key-group {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.key-group p {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    background: inherit;
+    width: 100%;
+    height: 100%;
+    font-size: 3em;
+}
+
+.white  {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    color: #000000;
+    border: solid #000000 2px;
+}
+
+.black {
+    top:0;
+    right: -30%;
+    z-index: 1;
+    position: absolute;
+    width: 60%;
+    height: 70%;
+    background: #000000;
+    color: #ffffff;
+    border: solid #bbbbbb 1px;
+}
