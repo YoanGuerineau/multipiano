@@ -12,6 +12,11 @@ html, body {
     height: 100%;
 }
 
+#room-id {
+    position: absolute;
+    top: 0;
+}
+
 #container {
     display: flex;
     justify-content: space-evenly;

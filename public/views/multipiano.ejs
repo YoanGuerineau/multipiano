@@ -6,9 +6,12 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <link rel='stylesheet' href='/css/style.css'>
     <script src='/js/lib/simpleTones.js'></script>
-    <title>Multipiano</title>
+    <title>Multipiano Room</title>
 </head>
 <body>
+    <div id="room-id">
+        Room ID: <input type="text" value="<%= roomID  %>"> 
+    </div>
     <div id='container'>
         <!-- This is filled with setupKeys.js -->
     </div>
@@ -16,4 +19,10 @@
 <script src='/js/setupKeys.js'></script>
 <script type='module' src='/js/bindKeys.js'></script>
 <script type='module' src='/js/script.js'></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const roomID = "<%= roomID  %>";
+    socket.emit( 'join-room', roomID );
+</script>
 </html>

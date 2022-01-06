@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Multipiano</title>
+</head>
+<body>
+	<form action="/create-room" method="POST">
+		<input name="room" type="text" id="create-room-id"  style="display: none;" required>
+		<button type="submit">Create room</button>
+	</form>
+	<input type="text" id="room-id-input" placeholder="Leave empty to see all rooms">
+	<button id="join-room-button">Join room</button>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+</html>
