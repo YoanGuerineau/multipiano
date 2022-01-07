@@ -49,11 +49,20 @@ io.on( 'connection', ( socket ) => {
         console.log(`USER DISCONNECTS: ${socket.id} | ROOMS NB: ${socket.rooms.size}`);
         getUserRooms(socket).forEach( ( room ) => {
             delete rooms[room].users[socket.id]
-            if ( rooms[room].users.length <= 0 ) {
-                delete rooms[room];
-            }
+            setTimeout( () => {
+                if ( rooms[room].users.length <= 0 ) {
+                    delete rooms[room];
+                }
+            }, 5000)
         });
     });
+
+    socket.on( 'playKey', ( roomID, note ) => {
+        socket.to( roomID ).emit( 'playKey', ( note ) );
+    })
+    socket.on( 'stopKey', ( roomID, note ) => {
+        socket.to( roomID ).emit( 'stopKey', ( note ) );
+    })
 });
 
 function getUserRooms( socket ) {

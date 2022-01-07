@@ -42,12 +42,25 @@ export class Key {
     }
 
     playKey() {
+        socket.emit( 'playKey', roomID, this.note );
         this.element.style.background = this.triggerBackground;
         playTone( this.note, this.shape, this.duration );
         this.noSpam = true;
     }
 
     stopKey() {
+        socket.emit( 'stopKey', roomID, this.note );
+        this.element.style.background = this.defaultBackground;
+        this.noSpam = false;
+    }
+
+    playReceivedKey() {
+        this.element.style.background = this.triggerBackground;
+        playTone( this.note, this.shape, this.duration );
+        this.noSpam = true;
+    }
+
+    stopReceivedKey() {
         this.element.style.background = this.defaultBackground;
         this.noSpam = false;
     }

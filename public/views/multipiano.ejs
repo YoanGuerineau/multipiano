@@ -17,12 +17,21 @@
     </div>
 </body>
 <script src='/js/setupKeys.js'></script>
-<script type='module' src='/js/bindKeys.js'></script>
-<script type='module' src='/js/script.js'></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
     const socket = io();
     const roomID = "<%= roomID  %>";
     socket.emit( 'join-room', roomID );
+</script>
+<script type='module' src='/js/bindKeys.js' roomID="<%= roomID %>" socket=socket></script>
+<script>
+    socket.on( 'playKey', ( note ) => {
+        const targetKey = getKey( note );
+        targetKey.playReceivedKey();
+    })
+    socket.on( 'stopKey', ( note ) => {
+        const targetKey = getKey( note );
+        targetKey.stopReceivedKey();
+    })
 </script>
 </html>
