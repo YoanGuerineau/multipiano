@@ -29,6 +29,25 @@ export class Key {
     }
 
     setListeners() {
+        this.element.addEventListener( 'mousedown', ( event ) => {
+            document.mouseDown = true;            if ( !this.noSpam ) {
+                this.playKey();
+            }
+        });
+        this.element.addEventListener( 'mouseup', ( event ) => {
+            document.mouseDown = false;
+            this.stopKey();
+        });
+        this.element.addEventListener( 'mouseenter', ( event ) => {
+            if ( document.mouseDown ) {
+                this.playKey();
+            }
+        });
+        this.element.addEventListener( 'mouseleave', ( event ) => {
+            if ( this.noSpam ) {
+                this.stopKey();
+            }
+        });
         document.addEventListener( 'keydown', ( event ) => {
             if ( event.code === this.keyCode && !this.noSpam ) {
                 this.playKey();

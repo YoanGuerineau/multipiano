@@ -23,6 +23,7 @@ html, body {
     width: 90%;
     height: 30%;
     background: #ff0000;
+    user-select: none;
 }
 
 .key-group {
@@ -48,6 +49,10 @@ html, body {
     background: #ffffff;
     color: #000000;
     border: solid #000000 2px;
+}
+
+.white:hover, .black:hover {
+    cursor: pointer;
 }
 
 .black {

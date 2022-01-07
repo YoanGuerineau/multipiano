@@ -40,17 +40,17 @@ app.get( '/room/:roomID', ( req, res ) => {
 server.listen( port );
 
 io.on( 'connection', ( socket ) => {
+
     socket.on( 'join-room', ( roomID ) => {
         socket.join( roomID );
         rooms[roomID].users[socket.id] = socket.id;
     });
 
     socket.on( 'disconnect', () => {
-        console.log(`USER DISCONNECTS: ${socket.id} | ROOMS NB: ${socket.rooms.size}`);
         getUserRooms(socket).forEach( ( room ) => {
             delete rooms[room].users[socket.id]
             setTimeout( () => {
-                if ( rooms[room].users.length <= 0 ) {
+                if ( rooms[room] && rooms[room].users && Object.entries( rooms[room].users ).length <= 0 ) {
                     delete rooms[room];
                 }
             }, 5000)
@@ -60,9 +60,11 @@ io.on( 'connection', ( socket ) => {
     socket.on( 'playKey', ( roomID, note ) => {
         socket.to( roomID ).emit( 'playKey', ( note ) );
     })
+
     socket.on( 'stopKey', ( roomID, note ) => {
         socket.to( roomID ).emit( 'stopKey', ( note ) );
     })
+
 });
 
 function getUserRooms( socket ) {
@@ -76,7 +78,7 @@ function getUserRooms( socket ) {
 
 function S4() {
     return (((1+Math.random())*0x10000)|0).toString(16).substring(1); 
-  }
+}
 
 function getRandomID() {
     return S4() + S4();
