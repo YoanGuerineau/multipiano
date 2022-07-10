@@ -30,7 +30,8 @@ export class Key {
 
     setListeners() {
         this.element.addEventListener( 'mousedown', ( event ) => {
-            document.mouseDown = true;            if ( !this.noSpam ) {
+            document.mouseDown = true;
+            if ( !this.noSpam ) {
                 this.playKey();
             }
         });
