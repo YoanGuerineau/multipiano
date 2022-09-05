@@ -1,14 +1,22 @@
 const express = require( 'express' );
 const http = require( 'http' );
-const { Server } = require( 'socket.io' );
+const io = require( 'socket.io' );
 const path = require( 'path' );
 
 const app = express();
 const server = http.createServer( app );
-const io = new Server( server );
+const socket = io( server, 
+    {
+        cors: {
+            origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN,
+            methods: ['GET', 'POST'],
+            transports: ['websocket', 'polling']
+        },
+        path: '/multipiano/socket.io',
+    } );
 const port = process.env.PORT || 3000;
 
-app.use( express.static( 'public' ) )
+app.use( '/multipiano', express.static( 'public' ) );
 app.use( express.urlencoded( { extended: true } ) );
 
 app.set( 'views', path.join(__dirname, '/public/views'))
@@ -16,30 +24,30 @@ app.set( 'view engine', 'ejs' );
 
 const rooms = { }
 
-app.get( '/', ( req, res ) => {
+app.get( '/multipiano/', ( req, res ) => {
     res.render( 'index', { root: __dirname } );
 });
 
-app.get( '/rooms', ( req, res ) => {
+app.get( '/multipiano/rooms', ( req, res ) => {
     res.render( 'rooms', { root: __dirname, rooms: rooms } );
 });
 
-app.post( '/create-room', ( req, res ) => {
+app.get( '/multipiano/create-room', ( req, res ) => {
     do { randomID = getRandomID(); } while ( rooms[randomID] );
     rooms[randomID] = { users: [] }
-    return res.redirect( '/room/'+randomID );
+    return res.redirect( '/multipiano/room/'+randomID );
 });
 
-app.get( '/room/:roomID', ( req, res ) => {
+app.get( '/multipiano/room/:roomID', ( req, res ) => {
     if ( rooms[req.params.roomID] == null ) {
-        return res.redirect( '/' );
+        return res.redirect( '/multipiano/' );
     }
     res.render( 'multipiano', { root: __dirname, roomID: req.params.roomID } );
 });
 
 server.listen( port );
 
-io.on( 'connection', ( socket ) => {
+socket.on( 'connection', ( socket ) => {
 
     socket.on( 'join-room', ( roomID ) => {
         socket.join( roomID );

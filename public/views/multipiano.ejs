@@ -4,8 +4,8 @@
     <meta charset='UTF-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' href='/css/style.css'>
-    <script src='/js/lib/simpleTones.js'></script>
+    <link rel='stylesheet' href='/multipiano/css/style.css'>
+    <script src='/multipiano/js/lib/simpleTones.js'></script>
     <title>Multipiano Room</title>
 </head>
 <body>
@@ -16,14 +16,14 @@
         <!-- This is filled with setupKeys.js -->
     </div>
 </body>
-<script src='/js/setupKeys.js'></script>
-<script src="/socket.io/socket.io.js"></script>
+<script src='/multipiano/js/setupKeys.js'></script>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 <script>
-    const socket = io();
+    const socket = io.connect('http://kubernetes.docker.internal', {path: '/multipiano/socket.io'});
     const roomID = "<%= roomID  %>";
     socket.emit( 'join-room', roomID );
 </script>
-<script type='module' src='/js/bindKeys.js' roomID="<%= roomID %>" socket=socket></script>
+<script type='module' src='/multipiano/js/bindKeys.js' roomID="<%= roomID %>" socket=socket></script>
 <script>
     socket.on( 'playKey', ( note ) => {
         const targetKey = getKey( note );

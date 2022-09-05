@@ -1,10 +1,16 @@
-const socket = io();
+const socket = io.connect('http://kubernetes.docker.internal', {path: '/multipiano/socket.io'});
 const createRoomID = document.getElementById("create-room-id");
+const createRoomButton = document.getElementById("create-room-button");
 const roomIDInput = document.getElementById("room-id-input");
 const joinRoomButton = document.getElementById("join-room-button");
 
 socket.on( "connect", () => {
 	createRoomID.value = socket.id;
+	console.log(`socket connected with id: ${createRoomID.value}`);
+});
+
+createRoomButton.addEventListener( "click", ( event ) => {
+	window.location.replace('http://kubernetes.docker.internal/multipiano/create-room/');
 });
 
 joinRoomButton.addEventListener( "click", ( event ) => {

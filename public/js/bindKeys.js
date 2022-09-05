@@ -1,4 +1,4 @@
-import { Key } from '/js/classes/Key.js';
+import { Key } from '/multipiano/js/classes/Key.js';
 
 const boundKeys = {}
 
