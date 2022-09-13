@@ -19,7 +19,7 @@
 <script src='/multipiano/js/setupKeys.js'></script>
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 <script>
-    const socket = io.connect('http://kubernetes.docker.internal', {path: '/multipiano/socket.io'});
+    const socket = io.connect(`http://${window.location.hostname}`, {path: '/multipiano/socket.io'});
     const roomID = "<%= roomID  %>";
     socket.emit( 'join-room', roomID );
 </script>
